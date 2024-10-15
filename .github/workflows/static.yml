@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acid Pump System</title>
+    <style>
+        #canvas-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            border: 1px solid black;
+        }
+        .component {
+            position: absolute;
+            padding: 10px;
+            background-color: lightgreen;
+            cursor: pointer;
+        }
+        #clue-box {
+            margin-top: 20px;
+            width: 500px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container">
+    <div id="reservoir" class="component" style="left: 50px; top: 50px;">Reservoir</div>
+    <div id="pump" class="component" style="left: 250px; top: 50px;">Pump</div>
+    <div id="bearings" class="component" style="left: 400px; top: 50px;">Bearings</div>
+    <div id="impeller" class="component" style="left: 500px; top: 50px;">Impeller</div>
+    <div id="shaft" class="component" style="left: 250px; top: 150px;">Shaft</div>
+    <div id="motor" class="component" style="left: 500px; top: 150px;">Motor</div>
+</div>
+
+<textarea id="clue-box" readonly></textarea>
+
+<script>
+    const clues = {
+        'Reservoir': ["Clue 1: Crackling sound begins when fluid level is below 3.1 m"],
+        'Pump': ["Clue 1: Increased temperature in the pump", "Clue 2: Cavitation sounds coming from the pump", "Clue 3: Pump pressure fluctuating"],
+        'Bearings': ["Clue 1: Visible wear on the bearings", "Clue 2: Increased bearing temperature", "Clue 3: Dust particles near the bearings"],
+        'Impeller': ["Clue 1: Impeller shows signs of cavitation", "Clue 2: Fluid flow is uneven", "Clue 3: Impeller eye showing wear"],
+        'Shaft': ["Clue 1: Shaft misalignment detected", "Clue 2: Vibration at the shaft", "Clue 3: Shaft wear near the bearings"],
+        'Motor': ["Clue 1: Motor overheating", "Clue 2: Unusual motor noise", "Clue 3: Motor current draw higher than usual"]
+    };
+
+    let clueIndex = {
+        'Reservoir': 0, 'Pump': 0, 'Bearings': 0, 'Impeller': 0, 'Shaft': 0, 'Motor': 0
+    };
+
+    document.querySelectorAll('.component').forEach(component => {
+        component.addEventListener('click', function () {
+            const componentName = this.id;
+            const currentClueIndex = clueIndex[componentName];
+            const currentClue = clues[componentName][currentClueIndex];
+            
+            // Update the clue box
+            document.getElementById('clue-box').value = currentClue;
+            
+            // Cycle to the next clue
+            clueIndex[componentName] = (currentClueIndex + 1) % clues[componentName].length;
+        });
+    });
+</script>
+
+</body>
+</html>
